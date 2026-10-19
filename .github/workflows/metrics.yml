@@ -1,0 +1,50 @@
+name: Contribution Metrics
+
+on:
+  schedule:
+    # 06:27 Asia/Shanghai (UTC+8), once per day.
+    - cron: "27 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-metrics
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+
+      - name: Check calculations and README paths
+        run: node scripts/check.mjs
+
+      - name: Generate themed calendar and compact statistics
+        run: node scripts/metrics.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROFILE_USER: SymphonyW
+
+      - name: Publish to the metrics branch
+        uses: crazy-max/ghaction-github-pages@v5.0.0
+        with:
+          target_branch: metrics
+          build_dir: dist
+          jekyll: false
+          allow_empty_commit: false
+          commit_message: "chore: update contribution metrics"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

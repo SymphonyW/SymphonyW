@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="140" viewBox="0 0 720 140" role="img" aria-labelledby="title desc">
+  <title id="title">SymphonyW</title>
+  <desc id="desc">Hello, GitHub. A minimal terminal greeting with a blinking cursor.</desc>
+  <style>
+    .cursor { animation: blink 1.2s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+  </style>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace" text-anchor="middle">
+    <text x="360" y="56" fill="#e6edf3" font-size="36" font-weight="600" letter-spacing="-1">SymphonyW</text>
+    <text x="354" y="100" fill="#39d353" font-size="18">&gt; Hello, GitHub</text>
+  </g>
+  <rect class="cursor" x="443" y="86" width="10" height="18" rx="1" fill="#39d353" />
+</svg>
